@@ -44,5 +44,17 @@ Ext.define('App.view.products', {
                 }
             }]
         }
-    ]
+    ],
+    dockedItems: [{
+        xtype: 'toolbar',
+        dock: 'top',
+        items: [
+            {
+                xtype: 'button',
+                name: 'add',
+                text: 'Add',
+                itemId: 'addButton'
+            }
+        ]
+    }]
 });

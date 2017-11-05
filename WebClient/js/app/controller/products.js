@@ -6,6 +6,12 @@ Ext.define('App.controller.products', {
     views: [
         'App.view.products'
     ],
+    refs: [
+        {
+            ref: 'addButton',
+            selector: 'button#addButton'
+        }
+    ],
     grid: undefined,
     viewport: undefined,
     init: function (app) {
@@ -18,9 +24,13 @@ Ext.define('App.controller.products', {
         this.grid.bindStore(store);
         this.viewport = viewport;
         this.addComponent(this.grid);
+        this.getAddButton().on('click', this.add, this);
     },
     addComponent: function (component) {
         this.viewport.add(component);
         this.viewport.doLayout();
-    }
+    },
+    add: function (button) {
+        alert(button);
+    },
 });
