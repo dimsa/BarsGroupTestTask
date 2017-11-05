@@ -1,10 +1,10 @@
-Ext.define('App.controller.products', {
+Ext.define('App.controller.provisioners', {
     extend: 'Ext.app.Controller',
     stores: [
-        'App.model.productStore'
+        'App.model.provisionerStore'
     ],
     views: [
-        'App.view.products'
+        'App.view.provisioners'
     ],
     refs: [
         {
@@ -15,11 +15,11 @@ Ext.define('App.controller.products', {
     grid: undefined,
     viewport: undefined,
     init: function (app) {
-        console.log('productsControllerInit');
+        console.log('provisionerControllerInit');
     },
     renderTo: function (viewport) {
-        var store = this.getStore('App.model.productStore');
-        var gr = this.getView('App.view.products');
+        var store = this.getStore('App.model.provisionerStore');
+        var gr = this.getView('App.view.provisioners');
         this.grid = Ext.create(gr);
         this.grid.bindStore(store);
         this.viewport = viewport;
@@ -28,7 +28,7 @@ Ext.define('App.controller.products', {
     },
     addComponent: function (component) {
         this.viewport.add(component);
-    //    this.viewport.doLayout();
+        this.viewport.doLayout();
     },
     add: function (button) {
         alert(button);
