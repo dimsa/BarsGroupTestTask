@@ -48,51 +48,19 @@ Ext.onReady(function () {
 
     console.log(store);
 
-    // create the Grid
-    var grid = Ext.create('Ext.grid.Panel', {
-        store: store,
-        columnLines: true,
-        columns: [{
-            xtype: 'rownumberer'
-        }, {
-            text: 'Company<br>Name', // Two line header! Test header height synchronization!
-            locked: true,
-            width: 200,
-            sortable: false,
-            dataIndex: 'company'
-        }, {
-            text: 'Price',
-            lockable: false,
-            width: 125,
-            sortable: true,
-            renderer: 'usMoney',
-            dataIndex: 'price'
-        }, {
-            text: 'Change',
-            width: 125,
-            sortable: true,
-            renderer: change,
-            dataIndex: 'change'
-        }, {
-            text: '% Change',
-            width: 125,
-            sortable: true,
-            renderer: pctChange,
-            dataIndex: 'pctChange'
-        }, {
-            text: 'Last Updated',
-            width: 135,
-            sortable: true,
-            renderer: Ext.util.Format.dateRenderer('m/d/Y'),
-            dataIndex: 'lastChange'
-        }],
-        bbar: Ext.create('App.Ui.PagingTool').getPagingTool(store),
-        height: 350,
-        width: 600,
-        title: 'Locking Grid Column',
-        renderTo: 'grid-example',
-        viewConfig: {
-            stripeRows: true
+    Ext.application({
+        appFolder: 'js/app',
+        name: 'App',
+        autoCreateViewport: true,
+        requires: ['App.view.Viewport'],
+        controllers: ['App.controller.products'],
+        stores: ['App.model.productStore'],
+
+
+        launch: function () {
+            var vp = Ext.ComponentQuery.query('viewport')[0];
+            var controller = this.getController('App.controller.products');
+            controller.renderTo(vp);
         }
     });
 });

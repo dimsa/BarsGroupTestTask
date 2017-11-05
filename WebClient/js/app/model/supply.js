@@ -4,6 +4,6 @@ Ext.define('App.model.supply', {
         { name: 'Id', type: 'int' },
         { name: 'TimeStamp', type: 'date' },
         { name: 'Product', type: 'auto' },
-        { name: 'Provisioner', type: 'auto' },
+        { name: 'Provisioner', type: 'auto' }
     ]
 });

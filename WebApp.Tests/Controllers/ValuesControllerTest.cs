@@ -16,7 +16,7 @@ namespace WebApp.Tests.Controllers
         public void Get()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            ProductsController controller = new ProductsController();
 
             // Act
             IEnumerable<string> result = controller.Get();
@@ -32,7 +32,7 @@ namespace WebApp.Tests.Controllers
         public void GetById()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            ProductsController controller = new ProductsController();
 
             // Act
             string result = controller.Get(5);
@@ -45,7 +45,7 @@ namespace WebApp.Tests.Controllers
         public void Post()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            ProductsController controller = new ProductsController();
 
             // Act
             controller.Post("value");
@@ -57,7 +57,7 @@ namespace WebApp.Tests.Controllers
         public void Put()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            ProductsController controller = new ProductsController();
 
             // Act
             controller.Put(5, "value");
@@ -69,7 +69,7 @@ namespace WebApp.Tests.Controllers
         public void Delete()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            ProductsController controller = new ProductsController();
 
             // Act
             controller.Delete(5);

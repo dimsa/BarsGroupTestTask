@@ -1,7 +1,8 @@
-Ext.define('App.model.provisioner', {
+Ext.define('App.model.product', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'Id', type: 'int' },
-        { name: 'Name', type: 'string' }
+        { name: 'Name', type: 'string' },
+        { name: 'Code', type: 'string' }
     ]
 });
