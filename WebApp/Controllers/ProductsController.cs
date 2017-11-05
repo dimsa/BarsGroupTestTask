@@ -14,38 +14,48 @@ namespace WebApp.Controllers
     [EnableCors(origins: "http://localhost:11215", headers: "*", methods: "*")]
     public class ProductsController : ApiController
     {
-        // GET api/values
         [HttpGet]
         public List<Product> Get()
         {
-         //   return new string[] { "value1", "value2" };
-
-            var obj = new Product()
+            var obj1 = new Product()
             {
-                Code = new Guid(),
+                Id = 1,
+                Code = Guid.NewGuid(),
                 Name = "tet"
             };
-            return new List<Product>() { obj };//{[" + JsonConvert.SerializeObject(obj) + "]}";
+
+            var obj2 = new Product()
+            {
+                Id = 2,
+                Code = Guid.NewGuid(),
+                Name = "test2"
+            };
+
+            return new List<Product>() { obj1, obj2 };
         }
 
         // GET api/values/5
+        [HttpGet]
         public string Get(int id)
         {
             return "value";
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        [HttpPost]
+        public void Post(Product product)
         {
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        public void Put(int id, Product product)
         {
         }
 
         // DELETE api/values/5
-        public void Delete(int id)
+        [HttpDelete]
+        public void Delete(Product product)
         {
         }
     }

@@ -4,7 +4,7 @@ namespace DataAccess.Entities
 {
     public class Product
     {
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual Guid Code { get; set; }
     }
