@@ -1,6 +1,7 @@
 Ext.define('App.model.provisioner', {
     extend: 'Ext.data.Model',
     idProperty: 'Id',
+    // Приходится переписывать методы генрации Id, чтобы автоматические REST запросы приходили на items/{Id}
     idgen: {
         isGenerator: true,
         type: 'default',

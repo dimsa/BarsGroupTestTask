@@ -12,26 +12,30 @@ using DataAccess.Services;
 
 namespace WebApp.Controllers
 {
-    [RoutePrefix("api/provisioners")]
+    [RoutePrefix("api/supplies")]
     [EnableCors(origins: "http://localhost:11215", headers: "*", methods: "*")]
-    public class ProvisionersController : BaseController
+    public class SuppliesController : BaseController
     {
         [HttpGet]
-        public List<Provisioner> Get()
+        public List<Supply> Get()
         {
-            var obj1 = new Provisioner()
+            var obj1 = new Supply()
             {
                 Id = 1,
-                Name = "provisioner 1"
+                ProductId = 1,
+                ProvisionerId = 1,
+                TimeStamp = new DateTime(2017,05,10)
             };
 
-            var obj2 = new Provisioner()
+            var obj2 = new Supply()
             {
-                Id = 2,
-                Name = "provisioner 2"
+                Id = 1,
+                ProductId = 1,
+                ProvisionerId = 2,
+                TimeStamp = new DateTime(2017, 05, 12)
             };
 
-            return new List<Provisioner>() { obj1, obj2 };
+            return new List<Supply>() { obj1, obj2 };
         }
 
         // GET api/values/5
@@ -43,23 +47,23 @@ namespace WebApp.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post(Provisioner provisioner)
+        public void Post(Supply provisioner)
         {
         }
 
         // PUT api/values/5
         [HttpPut]
-        public void Put(int id, Provisioner provisioner)
+        public void Put(int id, Supply provisioner)
         {
         }
 
         // DELETE api/values/5
         [HttpDelete]
-        public void Delete(Provisioner provisioner)
+        public void Delete(Supply provisioner)
         {
         }
 
-        public ProvisionersController(DataService dataService) : base(dataService)
+        public SuppliesController(DataService dataService) : base(dataService)
         {
         }
     }

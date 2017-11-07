@@ -26,7 +26,7 @@ namespace DataAccess
         static UnitOfWork()
         {
             _sessionFactory = Fluently.Configure()
-                .Database(MsSqlConfiguration.MsSql2012.ConnectionString(@"Server=..\SQLEXPRESS;Database=BarsGroupTestTaskDB;Integrated Security=True;")
+                .Database(MsSqlConfiguration.MsSql2012.ConnectionString(@"Server=.\SQLEXPRESS;Database=BarsGroupTestTaskDB;Integrated Security=True;")
                     .ShowSql()
                 )
                 //Маппинг. Используя AddFromAssemblyOf NHibernate будет пытаться маппить КАЖДЫЙ класс в этой сборке (assembly). Можно выбрать любой класс. 

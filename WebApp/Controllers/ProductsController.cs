@@ -7,12 +7,14 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using DataAccess;
+using DataAccess.Services;
 
 namespace WebApp.Controllers
 {
     [RoutePrefix("api/products")]
     [EnableCors(origins: "http://localhost:11215", headers: "*", methods: "*")]
-    public class ProductsController : ApiController
+    public class ProductsController : BaseController
     {
         [HttpGet]
         public List<Product> Get()
@@ -31,7 +33,10 @@ namespace WebApp.Controllers
                 Name = "test2"
             };
 
-            return new List<Product>() { obj1, obj2 };
+            var product = DataService.AddProduct();
+
+
+            return new List<Product>() { obj1, obj2, product };
         }
 
         // GET api/values/5
@@ -57,6 +62,11 @@ namespace WebApp.Controllers
         [HttpDelete]
         public void Delete(Product product)
         {
+        }
+
+        public ProductsController(DataService dataService) : base(dataService)
+        {
+            
         }
     }
 }

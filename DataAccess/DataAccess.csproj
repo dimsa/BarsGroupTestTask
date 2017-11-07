@@ -60,10 +60,12 @@
   <ItemGroup>
     <Compile Include="DataAccess.cs" />
     <Compile Include="Entities\DataModel.cs" />
+    <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Mappings\DataModelMapping.cs" />
     <Compile Include="NHibernateHelper.cs" />
-    <Compile Include="ProductRepository.cs" />
+    <Compile Include="Repository\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DataService.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
