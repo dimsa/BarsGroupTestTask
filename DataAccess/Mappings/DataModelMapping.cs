@@ -12,10 +12,6 @@ namespace DataAccess.Mappings
                 Id(it => it.Id);
                 Map(it => it.Name);
                 Map(it => it.Code);
-             /*   HasMany<SupplyMap>(it => it.Id).
-                    Cascade.All().
-                    Inverse().
-                    Table("Supply");*/
             }
         }
 
@@ -25,10 +21,6 @@ namespace DataAccess.Mappings
             {
                 Id(it => it.Id);
                 Map(it => it.Name);
-            /*    HasMany<SupplyMap>(it => it.Id).
-                    Cascade.All().
-                    Inverse().
-                    Table("Supply");*/
             }
         }
 
@@ -37,12 +29,29 @@ namespace DataAccess.Mappings
             public SupplyMap()
             {
                 Id(it => it.Id);
-                Map(it => it.ProductId);
-                Map(it => it.ProvisionerId);
                 Map(it => it.TimeStamp);
-                
-           /*     References<Product>(it => it.ProductId);
-                References<Provisioner>(it => it.ProvisionerId);*/
+
+
+                Join("Product", join =>
+                {
+                    join.KeyColumn("Id");
+                    join.Component(it => it.Product, c =>
+                    {
+                        c.Map(it => it.Id);
+                        c.Map(it => it.Name);
+                        c.Map(it => it.Code);
+                    });
+                });
+
+                Join("Provisioner", join =>
+                {
+                    join.KeyColumn("Id");
+                    join.Component(it => it.Provisioner, c =>
+                    {
+                        c.Map(it => it.Id);
+                        c.Map(it => it.Name);
+                    });
+                });
             }
         }
     }

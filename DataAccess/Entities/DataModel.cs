@@ -18,8 +18,8 @@ namespace DataAccess.Entities
     public class Supply : IEntity
     {
         public virtual int Id { get; set; }
-        public virtual int ProductId { get; set; }
-        public virtual int ProvisionerId { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual Provisioner Provisioner { get; set; }
         public virtual DateTime TimeStamp { get; set; }
     }
 }

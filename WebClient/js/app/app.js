@@ -53,25 +53,23 @@ Ext.onReady(function () {
         name: 'App',
         autoCreateViewport: true,
         requires: ['App.view.Viewport'],
-        controllers: ['App.controller.products', 'App.controller.provisioners'],
-        stores: ['App.model.productStore', 'App.model.provisionerStore'],
+        controllers: ['App.controller.products', 'App.controller.provisioners', 'App.controller.supplies'],
+        stores: ['App.model.productStore', 'App.model.provisionerStore', 'App.model.supplyStore'],
 
 
         launch: function () {
             var tabs = Ext.create('App.view.tabs');
-
             var vp = Ext.ComponentQuery.query('viewport')[0];
             vp.add(tabs);
 
-            console.log('tabs', tabs);
-
-
             var controller = this.getController('App.controller.products');
             controller.renderTo(tabs.items.items[0]);
-
-            
+                       
             var controller = this.getController('App.controller.provisioners');
             controller.renderTo(tabs.items.items[1]);
+
+            var controller = this.getController('App.controller.supplies');
+            controller.renderTo(tabs.items.items[2]);
           
         }
     });

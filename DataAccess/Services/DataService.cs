@@ -11,6 +11,33 @@ namespace DataAccess.Services
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Provisioner> _provisionerRepository;
         private IRepository<Supply> _supplyRepository;
+
+        public List<Supply> GetSupplies(int skip, int quantity)
+        {
+            var query = _supplyRepository.GetAll();
+            var count = query.Count();
+
+            var list = count > 0 ?
+                query.Skip(skip).Take(Math.Min(quantity, count)).ToList() : new List<Supply>();
+
+            return list;
+        }
+
+        public Supply AddSupply(Supply supply)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSupply(Supply supply)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateSupply(Supply supply)
+        {
+            throw new NotImplementedException();
+        }
+
         private IUnitOfWork _unitOfWork;
         public DataService(IUnitOfWork unitOfWork)
         {

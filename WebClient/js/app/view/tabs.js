@@ -1,6 +1,6 @@
 Ext.define('App.view.tabs', {
     extend: 'Ext.tab.Panel',
-    width: 800,
+    width: 1024,
     height: 400,
     activeTab: 0,
     plain: true,
@@ -10,6 +10,9 @@ Ext.define('App.view.tabs', {
         },
         {
             title: 'Редактирование поставщиков'
+        },
+        {
+            title: 'Редактирование справочника поставок'
         }
     ],
 });
