@@ -15,16 +15,17 @@ namespace WebApp.Ioc
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Classes.FromThisAssembly()
-                .BasedOn<IHttpController>()
-                .LifestylePerWebRequest()); 
+            var controllers = Classes.FromThisAssembly()
+                .BasedOn<BaseController>().Unless(type => type == typeof(BaseController));
+            container.Register(controllers
+                .LifestylePerWebRequest());
 
             container.Register(
-                Component.For<IUnitOfWork>().ImplementedBy<UnitOfWork>()
+                Component.For<IUnitOfWork>().ImplementedBy<UnitOfWork>().LifestylePerWebRequest()
             );
 
             container.Register(
-                Component.For<DataService>().ImplementedBy<DataService>()
+                Component.For<DataService>().ImplementedBy<DataService>().LifestylePerWebRequest()
             );
 
 

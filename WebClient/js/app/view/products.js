@@ -52,8 +52,8 @@ Ext.define('App.view.products', {
             {
                 xtype: 'button',
                 name: 'add',
-                text: 'Add',
-                itemId: 'addButton'
+                text: 'Добавить товар',
+                itemId: 'addProductButton'
             }
         ]
     }]

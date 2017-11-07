@@ -4,7 +4,6 @@ Ext.define('App.model.product', {
     idgen: {
         isGenerator: true,
         type: 'default',
-
         generate: function () {
             return this;
         },

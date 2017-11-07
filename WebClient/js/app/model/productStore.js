@@ -5,13 +5,20 @@ Ext.define('App.model.productStore', {
         allowSingle: true,
         type: 'rest',
         url: 'http://localhost:5344/api/products',
-        success: function (r) { alert(r); },
+       // success: function (r) { alert(r); },
         reader: {
             successProperty: 'success',
             type: 'json'
         },
         writer: {
             type: 'json'
+        },
+        actionMethods:
+        {
+            create: "POST",
+            read: "GET",
+            update: "PUT",
+            destroy: "DELETE"
         }
     },
     autoLoad: true,

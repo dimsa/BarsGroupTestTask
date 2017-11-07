@@ -9,7 +9,7 @@ Ext.define('App.controller.provisioners', {
     refs: [
         {
             ref: 'addButton',
-            selector: 'button#addButton'
+            selector: 'button#addProvisionerButton'
         }
     ],
     grid: undefined,
@@ -28,14 +28,13 @@ Ext.define('App.controller.provisioners', {
     },
     addComponent: function (component) {
         this.viewport.add(component);
-        this.viewport.doLayout();
     },
     add: function (button) {
-        alert(button);
-              /*  var controller = this.application.getController('Keyhole.components.formController');
-        controller.show();
-
-        this.application.on('FORM_CONTROLLER_ADD', this.onFormControllerAdd, this);
-        this.application.on('FORM_CONTROLLER_CLOSED', this.onFormControllerClosed, this);*/
+        alert('hello');
+        var store = this.getStore('App.model.provisionerStore');
+        var pr = Ext.create('App.model.provisioner', { Id: 0, Name: "Новый поставщик" });
+        // Поле должно автоматически ставится в true, но этого не происходит.
+        pr.phantom = true;
+        store.add(pr);
     },
 });

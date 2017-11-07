@@ -45,8 +45,8 @@ Ext.define('App.view.provisioners', {
             {
                 xtype: 'button',
                 name: 'add',
-                text: 'Add',
-                itemId: 'addButton'
+                text: 'Добавить поставщика',
+                itemId: 'addProvisionerButton'
             }
         ]
     }]
