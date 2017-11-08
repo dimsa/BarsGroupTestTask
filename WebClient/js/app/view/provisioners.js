@@ -1,6 +1,18 @@
+var cellProvisionerEditing = Ext.create('Ext.grid.plugin.CellEditing', {    
+    listeners: {
+        beforeedit: function(plugin, edit) {
+            if (edit.column.xtype == 'actioncolumn') {
+                return false;
+            }            
+        }
+    }
+});
+
 Ext.define('App.view.provisioners', {
     extend: 'Ext.grid.Panel',
     title: 'Редактирование списка поставщиков',
+    plugins: [cellProvisionerEditing],
+    selType: 'cellmodel',
     columns: [
         {
             text: 'Идентификатор',
@@ -14,7 +26,11 @@ Ext.define('App.view.provisioners', {
             width: 300,
             sortable: true,
             hideable: false,
-            dataIndex: 'Name'
+            dataIndex: 'Name',
+            editor: {
+                    xtype: 'textfield',
+                    allowBlank: false                
+            }
         },
         {
             xtype: 'actioncolumn',
@@ -23,10 +39,13 @@ Ext.define('App.view.provisioners', {
                 icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
                 tooltip: 'Edit',
                 handler: function (grid, rowIndex, colIndex) {
-                    console.log(grid);
-                    var rec = grid.getStore().getAt(rowIndex);
-                    rec.set('Name', 'new value');
-                    rec.commit();
+                    console.log(cellProvisionerEditing);
+                    if (cellProvisionerEditing.editing === true) {
+                        cellProvisionerEditing.editing = false;
+                        cellProvisionerEditing.cancelEdit();
+                    } else {
+                        cellProvisionerEditing.startEdit(rowIndex, 1);                       
+                    }
                 }
             }, {
                 icon: 'js/vendor/extjs/examples/restful/images/delete.png',

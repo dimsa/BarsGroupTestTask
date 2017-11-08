@@ -1,6 +1,17 @@
+var cellProductsEditing = Ext.create('Ext.grid.plugin.CellEditing', {
+    listeners: {
+        beforeedit: function (plugin, edit) {
+            if (edit.column.xtype == 'actioncolumn') {
+                return false;
+            }
+        }
+    }
+});
+
 Ext.define('App.view.products', {
     extend: 'Ext.grid.Panel',
     title: 'Редактирование списка товаров',
+    plugins: [cellProductsEditing],
     columns: [
         {
             text: 'Идентификатор',
@@ -14,7 +25,11 @@ Ext.define('App.view.products', {
             width: 300,
             sortable: true,
             hideable: false,
-            dataIndex: 'Name'
+            dataIndex: 'Name',
+            editor: {
+                xtype: 'textfield',
+                allowBlank: false
+            }
         },
         {
             text: 'Код',
@@ -30,10 +45,13 @@ Ext.define('App.view.products', {
                 icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
                 tooltip: 'Edit',
                 handler: function (grid, rowIndex, colIndex) {
-                    console.log(grid);
-                    var rec = grid.getStore().getAt(rowIndex);
-                    rec.set('Name', 'new value');
-                    rec.commit();
+                    console.log(cellProductsEditing);
+                    if (cellProductsEditing.editing === true) {
+                        cellProductsEditing.editing = false;
+                        cellProductsEditing.cancelEdit();
+                    } else {
+                        cellProductsEditing.startEdit(rowIndex, 1);
+                    }
                 }
             }, {
                 icon: 'js/vendor/extjs/examples/restful/images/delete.png',
