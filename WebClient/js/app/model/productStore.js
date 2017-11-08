@@ -1,6 +1,7 @@
 Ext.define('App.model.productStore', {
     extend: 'Ext.data.Store',
     model: 'App.model.product',
+    pageSize: 10,
     proxy: {
         allowSingle: true,
         type: 'rest',
@@ -8,7 +9,9 @@ Ext.define('App.model.productStore', {
        // success: function (r) { alert(r); },
         reader: {
             successProperty: 'success',
-            type: 'json'
+            type: 'json',
+            root: 'Data',
+            totalProperty: 'RecordTotal'
         },
         writer: {
             type: 'json'

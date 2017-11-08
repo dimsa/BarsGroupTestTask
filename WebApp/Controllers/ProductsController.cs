@@ -11,10 +11,13 @@ namespace WebApp.Controllers
     public class ProductsController : BaseController
     {
         [HttpGet]
-        public List<ProductDto> Get(int start = 0, int limit = 25)
+        public ListWithTotal<ProductDto> Get(int start = 0, int limit = 25)
         {
-            var res = DataService.GetProducts(start, limit);
-            return res.Select(DtoConverter.ProductModelToDto).ToList();
+            var res = DataService.GetProducts(start, limit, out var totalCount);            
+            var list = res.Select(DtoConverter.ProductModelToDto).ToList();
+
+            return new ListWithTotal<ProductDto>(list, totalCount);
+
         }
 
         [HttpPut]

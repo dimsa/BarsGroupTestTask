@@ -41,28 +41,30 @@ Ext.define('App.view.products', {
         {
             xtype: 'actioncolumn',
             width: 50,
-            items: [{
-                icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-                tooltip: 'Edit',
-                handler: function (grid, rowIndex, colIndex) {
-                    console.log(cellProductsEditing);
-                    if (cellProductsEditing.editing === true) {
-                        cellProductsEditing.editing = false;
-                        cellProductsEditing.cancelEdit();
-                    } else {
-                        cellProductsEditing.startEdit(rowIndex, 1);
+            items: [
+                {
+                    icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png', // Use a URL in the icon config
+                    tooltip: 'Edit',
+                    handler: function(grid, rowIndex, colIndex) {
+                        console.log(cellProductsEditing);
+                        if (cellProductsEditing.editing === true) {
+                            cellProductsEditing.editing = false;
+                            cellProductsEditing.cancelEdit();
+                        } else {
+                            cellProductsEditing.startEdit(rowIndex, 1);
+                        }
+                    }
+                }, {
+                    icon: 'js/vendor/extjs/examples/restful/images/delete.png',
+                    tooltip: 'Delete',
+                    handler: function(grid, rowIndex, colIndex) {
+                        var rec = grid.getStore().getAt(rowIndex);
+                        grid.getStore().remove(rec);
                     }
                 }
-            }, {
-                icon: 'js/vendor/extjs/examples/restful/images/delete.png',
-                tooltip: 'Delete',
-                handler: function (grid, rowIndex, colIndex) {
-                    var rec = grid.getStore().getAt(rowIndex);
-                    grid.getStore().remove(rec);
-                }
-            }]
+            ]
         }
-    ],
+    ],  
     dockedItems: [{
         xtype: 'toolbar',
         dock: 'top',
@@ -74,5 +76,13 @@ Ext.define('App.view.products', {
                 itemId: 'addProductButton'
             }
         ]
+    }, {
+        xtype: 'pagingtoolbar',
+        store: Ext.data.StoreManager.get("App.model.productStore"),
+        dock: 'bottom',
+        displayInfo: true,
+        beforePageText: 'Страница',
+        afterPageText: 'из {0}',
+        displayMsg: '{0} - {1} из {2}'
     }]
 });

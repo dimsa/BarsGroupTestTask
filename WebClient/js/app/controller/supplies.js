@@ -10,6 +10,10 @@ Ext.define('App.controller.supplies', {
         {
             ref: 'addButton',
             selector: 'button#addSupplyButton'
+        },
+        {
+            ref: 'refreshButton',
+            selector: 'button#refreshSupplyButton'
         }
     ],
     requires: [
@@ -28,6 +32,7 @@ Ext.define('App.controller.supplies', {
         this.viewport = viewport;
         this.addComponent(this.grid);
         this.getAddButton().on('click', this.add, this);
+        this.getRefreshButton().on('click', this.refresh, this);
     },
     addComponent: function (component) {
         this.viewport.add(component);
@@ -38,6 +43,10 @@ Ext.define('App.controller.supplies', {
 
         this.application.on('FORM_CONTROLLER_ADD', this.onFormControllerAdd, this);
         this.application.on('FORM_CONTROLLER_CLOSED', this.onFormControllerClosed, this);
+    },
+    refresh: function (button) {
+        var store = this.getStore('App.model.supplyStore');
+        store.load();
     },
 
     onFormControllerAdd: function (values) {

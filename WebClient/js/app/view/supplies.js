@@ -5,14 +5,14 @@ Ext.define('App.view.supplies', {
     columns: [
         {
             text: 'Идентификатор',
-            width: 150,
+            width: 100,
             sortable: true,
             hideable: false,
             dataIndex: 'Id'
         },
         {
             text: 'Дата',
-            width: 300,
+            width: 150,
             sortable: true,
             hideable: false,
             dataIndex: 'TimeStamp',
@@ -41,7 +41,7 @@ Ext.define('App.view.supplies', {
             xtype: 'actioncolumn',
             width: 50,
             items: [{
-                icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
+                icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png',
                 tooltip: 'Edit',
                 handler: function (grid, rowIndex, colIndex) {
                     console.log(grid);
@@ -68,6 +68,13 @@ Ext.define('App.view.supplies', {
                 name: 'add',
                 text: 'Добавить поставку',
                 itemId: 'addSupplyButton'
+            },
+            
+            {
+                xtype: 'button',
+                name: 'refresh',
+                text: 'Обновить',
+                itemId: 'refreshSupplyButton'
             },
             {
                 xtype: 'button',

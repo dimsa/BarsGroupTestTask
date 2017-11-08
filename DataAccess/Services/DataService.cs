@@ -78,14 +78,14 @@ namespace DataAccess.Services
             return product;
         }
 
-        public List<Product> GetProducts(int skip, int quantity)
+        public List<Product> GetProducts(int skip, int quantity, out int totalCount)
         {
             var query = _productRepository.GetAll();
             var count = query.Count();
 
             var list = count > 0 ?
                 query.Skip(skip).Take(Math.Min(quantity, count)).ToList() : new List<Product>();
-
+            totalCount = count;
             return list;
         }
 
