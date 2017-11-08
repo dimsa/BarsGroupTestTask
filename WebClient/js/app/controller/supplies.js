@@ -12,6 +12,9 @@ Ext.define('App.controller.supplies', {
             selector: 'button#addSupplyButton'
         }
     ],
+    requires: [
+        'App.controller.supplyForm'
+    ],
     grid: undefined,
     viewport: undefined,
     init: function (app) {
@@ -30,10 +33,35 @@ Ext.define('App.controller.supplies', {
         this.viewport.add(component);
     },
     add: function (button) {
+        var controller = this.application.getController('App.controller.supplyForm');
+        controller.show();
+
+        this.application.on('FORM_CONTROLLER_ADD', this.onFormControllerAdd, this);
+        this.application.on('FORM_CONTROLLER_CLOSED', this.onFormControllerClosed, this);
+    },
+    onFormControllerAdd: function (values) {
+     
+        var date = values.date;
         var store = this.getStore('App.model.supplyStore');
-        var pr = Ext.create('App.model.supply', { Id: 0, Name: "Новый объект" });
+
+        console.log('store',store);
+        var pr = Ext.create('App.model.supply', {
+            Id: 0,
+            TimeStamp: date,
+            Product: { Id: values.product},
+            Provisioner: { Id: values.provisioner}
+        });
+
+        console.log('pr',pr);
+
         // Поле должно автоматически ставится в true, но этого не происходит.
         pr.phantom = true;
         store.add(pr);
+        store.sync();
+    },
+    onFormControllerClosed: function () {
+        this.application.un('FORM_CONTROLLER_ADD', this.onFormControllerAdd, this);
+        this.application.un('FORM_CONTROLLER_EDIT', this.onFormControllerEdit, this);
+        this.application.un('FORM_CONTROLLER_CLOSED', this.onFormControllerClosed, this);
     },
 });

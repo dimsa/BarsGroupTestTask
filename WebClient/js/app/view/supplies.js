@@ -11,11 +11,13 @@ Ext.define('App.view.supplies', {
             dataIndex: 'Id'
         },
         {
-            text: 'Дата и время',
+            text: 'Дата',
             width: 300,
             sortable: true,
             hideable: false,
-            dataIndex: 'TimeStamp'
+            dataIndex: 'TimeStamp',
+            type: 'date',
+            renderer: Ext.util.Format.dateRenderer('d.m.Y')
         },
         {
             text: 'Товар',

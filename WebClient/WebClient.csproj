@@ -59,8 +59,6 @@
     <Content Include="js\app\app.js" />
     <Content Include="js\app\controller\supplies.js" />
     <Content Include="js\app\controller\provisioners.js" />
-    <Content Include="js\app\data\dataStoreFactory.js" />
-    <Content Include="js\app\data\dataStub.js" />
     <Content Include="js\app\model\productStore.js" />
     <Content Include="js\app\model\supplyStore.js" />
     <Content Include="js\app\model\provisionerStore.js" />
@@ -79,6 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="js\app\controller\products.js" />
+    <Content Include="js\app\view\supplyForm.js" />
+    <Content Include="js\app\controller\supplyForm.js" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

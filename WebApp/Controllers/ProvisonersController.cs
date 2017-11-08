@@ -1,7 +1,9 @@
 ﻿using DataAccess.Entities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using DataAccess.Services;
+using WebApp.Common;
 
 namespace WebApp.Controllers
 {
@@ -9,27 +11,28 @@ namespace WebApp.Controllers
     public class ProvisionersController : BaseController
     {
         [HttpGet]
-        public List<Provisioner> Get(int start = 0, int limit = 25)
+        public List<ProvisionerDto> Get(int start = 0, int limit = 25)
         {
-           return DataService.GetProvisioner(start, limit);
+            var res = DataService.GetProvisioner(start, limit);
+            return res.Select(DtoConverter.ProvisionerModelToDto).ToList();
         }    
 
         [HttpPut]
-        public void Put(int id, Provisioner provisioner)
+        public void Put(int id, ProvisionerDto provisioner)
         {
-            DataService.UpdateProvisioner(provisioner);
+            DataService.UpdateProvisioner(DtoConverter.ProvisionerDtoToModel(provisioner));
         }
 
         [HttpPost]
-        public Provisioner Post(Provisioner provisioner)
+        public ProvisionerDto Post(ProvisionerDto provisioner)
         {
-            return DataService.AddProvisioner();
+            return DtoConverter.ProvisionerModelToDto(DataService.AddProvisioner());
         }
 
         [HttpDelete]
-        public void Delete(Provisioner provisioner)
+        public void Delete(int id, ProvisionerDto provisioner)
         {
-            DataService.DeleteProvisioner(provisioner);
+            DataService.DeleteProvisioner(id);
         }
 
         public ProvisionersController(DataService dataService) : base(dataService)

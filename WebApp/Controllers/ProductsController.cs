@@ -1,7 +1,9 @@
 ﻿using DataAccess.Entities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using DataAccess.Services;
+using WebApp.Common;
 
 namespace WebApp.Controllers
 {
@@ -9,27 +11,28 @@ namespace WebApp.Controllers
     public class ProductsController : BaseController
     {
         [HttpGet]
-        public List<Product> Get(int start = 0, int limit = 25)
+        public List<ProductDto> Get(int start = 0, int limit = 25)
         {
-            return DataService.GetProducts(start, limit);            
+            var res = DataService.GetProducts(start, limit);
+            return res.Select(DtoConverter.ProductModelToDto).ToList();
         }
 
         [HttpPut]
-        public void Put(Product product)
+        public void Put(ProductDto product)
         {
-            DataService.UpdateProduct(product);
+            DataService.UpdateProduct(DtoConverter.ProductDtoToModel(product));
         }
 
         [HttpPost]
-        public Product Post(Product product)
+        public ProductDto Post(ProductDto product)
         {
-            return DataService.AddProduct();
+            return DtoConverter.ProductModelToDto(DataService.AddProduct());
         }
 
         [HttpDelete]
-        public void Delete(int id, Product product)
+        public void Delete(int id, ProductDto product)
         {
-            DataService.DeleteProduct(product);
+            DataService.DeleteProduct(id);
         }
 
         public ProductsController(DataService dataService) : base(dataService)

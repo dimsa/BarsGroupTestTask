@@ -8,9 +8,10 @@ namespace DataAccess.Services
 {
     public class DataService
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Provisioner> _provisionerRepository;
-        private IRepository<Supply> _supplyRepository;
+        private readonly IRepository<Supply> _supplyRepository;
 
         public List<Supply> GetSupplies(int skip, int quantity)
         {
@@ -19,26 +20,41 @@ namespace DataAccess.Services
 
             var list = count > 0 ?
                 query.Skip(skip).Take(Math.Min(quantity, count)).ToList() : new List<Supply>();
-
+                       
             return list;
         }
 
         public Supply AddSupply(Supply supply)
         {
-            throw new NotImplementedException();
+            _unitOfWork.BeginTransaction();
+            try
+            {
+                _supplyRepository.Create(supply);
+                supply.Provisioner = _provisionerRepository.GetById(supply.Provisioner.Id);
+                supply.Product = _productRepository.GetById(supply.Product.Id);
+                _unitOfWork.Commit();
+                return supply;
+            } catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                return null;
+            }
         }
 
-        public void DeleteSupply(Supply supply)
+        public void DeleteSupply(int supplyId)
         {
-            throw new NotImplementedException();
+            _unitOfWork.BeginTransaction();
+            _supplyRepository.Delete(supplyId);
+            _unitOfWork.Commit();
         }
 
         public void UpdateSupply(Supply supply)
         {
-            throw new NotImplementedException();
+            _unitOfWork.BeginTransaction();
+            _supplyRepository.Update(supply);
+            _unitOfWork.Commit();
         }
-
-        private IUnitOfWork _unitOfWork;
+        
         public DataService(IUnitOfWork unitOfWork)
         {
             _productRepository = new Repository<Product>(unitOfWork);
@@ -75,8 +91,7 @@ namespace DataAccess.Services
         {
             _unitOfWork.BeginTransaction();
             _productRepository.Update(product);
-            _unitOfWork.Commit();
-                     
+            _unitOfWork.Commit();                     
         }
 
         public Product GetProduct(int id)
@@ -84,10 +99,10 @@ namespace DataAccess.Services
             return _productRepository.GetById(id);
         }
 
-        public void DeleteProduct(Product product)
+        public void DeleteProduct(int productId)
         {
             _unitOfWork.BeginTransaction();
-            _productRepository.Delete(product.Id);
+            _productRepository.Delete(productId);
             _unitOfWork.Commit();
         }
 
@@ -116,7 +131,9 @@ namespace DataAccess.Services
 
         public void UpdateProvisioner(Provisioner provisioner)
         {
+            _unitOfWork.BeginTransaction();
             _provisionerRepository.Update(provisioner);
+            _unitOfWork.Commit();
         }
 
         public Product GetProvisioner(int id)
@@ -124,9 +141,11 @@ namespace DataAccess.Services
             return _productRepository.GetById(id);
         }
 
-        public void DeleteProvisioner(Provisioner provisioner)
+        public void DeleteProvisioner(int provisionerId)
         {
-            _provisionerRepository.Delete(provisioner.Id);
+            _unitOfWork.BeginTransaction();
+            _provisionerRepository.Delete(provisionerId);
+            _unitOfWork.Commit();
         }
 
     }

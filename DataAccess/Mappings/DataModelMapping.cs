@@ -11,7 +11,7 @@ namespace DataAccess.Mappings
             {
                 Id(it => it.Id);
                 Map(it => it.Name);
-                Map(it => it.Code);
+                Map(it => it.Code);              
             }
         }
 
@@ -20,7 +20,7 @@ namespace DataAccess.Mappings
             public ProvisionerMap()
             {
                 Id(it => it.Id);
-                Map(it => it.Name);
+                Map(it => it.Name);                
             }
         }
 
@@ -30,28 +30,8 @@ namespace DataAccess.Mappings
             {
                 Id(it => it.Id);
                 Map(it => it.TimeStamp);
-
-
-                Join("Product", join =>
-                {
-                    join.KeyColumn("Id");
-                    join.Component(it => it.Product, c =>
-                    {
-                        c.Map(it => it.Id);
-                        c.Map(it => it.Name);
-                        c.Map(it => it.Code);
-                    });
-                });
-
-                Join("Provisioner", join =>
-                {
-                    join.KeyColumn("Id");
-                    join.Component(it => it.Provisioner, c =>
-                    {
-                        c.Map(it => it.Id);
-                        c.Map(it => it.Name);
-                    });
-                });
+                References(it => it.Product).Column("ProductId").Not.Nullable();
+                References(it => it.Provisioner).Column("ProvisionerId").Not.Nullable();
             }
         }
     }
