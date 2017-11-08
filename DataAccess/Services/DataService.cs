@@ -102,8 +102,18 @@ namespace DataAccess.Services
         public void DeleteProduct(int productId)
         {
             _unitOfWork.BeginTransaction();
+            DeleteSuppliesReferencedToProduct(productId);
             _productRepository.Delete(productId);
             _unitOfWork.Commit();
+        }
+
+        private void DeleteSuppliesReferencedToProduct(int productId)
+        {
+            var supplies = _supplyRepository.GetAll().Where(it => it.Product.Id == productId);
+            foreach (var supply in supplies)
+            {
+                _supplyRepository.Delete(supply.Id);
+            }
         }
 
         public Provisioner AddProvisioner()
@@ -144,9 +154,19 @@ namespace DataAccess.Services
         public void DeleteProvisioner(int provisionerId)
         {
             _unitOfWork.BeginTransaction();
+            DeleteSuppliesRefencedToProvisioner(provisionerId);
+
             _provisionerRepository.Delete(provisionerId);
             _unitOfWork.Commit();
         }
 
+        private void DeleteSuppliesRefencedToProvisioner(int provisionerId)
+        {
+            var list = _supplyRepository.GetAll().Where(it => it.Provisioner.Id == provisionerId);
+            foreach (var supply in list)
+            {
+                _supplyRepository.Delete(supply.Id);
+            }
+        }
     }
 }
