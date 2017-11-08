@@ -65,6 +65,7 @@
     <Content Include="js\app\model\supply.js" />
     <Content Include="js\app\model\product.js" />
     <Content Include="js\app\model\provisioner.js" />
+    <Content Include="js\app\view\printMenu.js" />
     <Content Include="js\app\view\supplies.js" />
     <Content Include="js\app\view\provisioners.js" />
     <Content Include="js\app\view\products.js" />

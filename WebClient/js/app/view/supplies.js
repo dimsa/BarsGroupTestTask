@@ -75,12 +75,33 @@ Ext.define('App.view.supplies', {
                 name: 'refresh',
                 text: 'Обновить',
                 itemId: 'refreshSupplyButton'
-            },
+            },      
             {
                 xtype: 'button',
                 name: 'print',
                 text: 'Печать',
-                itemId: 'printSupplyButton'
+                itemId: 'printButton',
+                menu: {
+                    xtype: 'menu',
+                    name: 'exportToXls',
+                    text: 'Печать',
+                    dock: 'top',
+                    itemId: 'exportSuppliesToXlsButton',
+                    items: [{
+                            text: 'Word',
+                            iconCls: 'edit',
+                            handler: function() {
+                                window.open("http://localhost:5344/api/export/doc", "_blank");
+                            }
+                        },
+                        {
+                            text: 'Excel',
+                            iconCls: 'edit',
+                            handler: function () {
+                                window.open("http://localhost:5344/api/export/xls", "_blank");
+                            }
+                        }]
+                }
             }
         ]
     }, {

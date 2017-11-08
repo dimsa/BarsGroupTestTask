@@ -39,20 +39,20 @@ Ext.define('App.view.supplyForm', {
 		            fieldLabel: 'Товар',
 		            itemId: 'product',
 		            name: 'product',
-		            store: Ext.create('App.model.productStore', {}),
+                    store: Ext.create('App.model.productStore', { pageSize: 0 }),
 		            displayField: 'Name',
                     valueField: 'Id',
-                    queryMode: 'remote'
+                    queryMode: 'local'
 		        },
 		         {
 		             xtype: 'combobox',
 		             fieldLabel: 'Поставщик',
 		             itemId: 'provisioner',
 		             name: 'provisioner',
-		             store: Ext.create('App.model.provisionerStore', {}),
+                     store: Ext.create('App.model.provisionerStore', { pageSize: 0 }),
 		             displayField: 'Name',
 		             valueField: 'Id',
-		             queryMode: 'remote'
+		             queryMode: 'local'
 		         }
             ]
         }
