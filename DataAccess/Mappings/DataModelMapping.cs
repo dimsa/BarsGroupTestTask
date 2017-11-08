@@ -29,9 +29,10 @@ namespace DataAccess.Mappings
             public SupplyMap()
             {
                 Id(it => it.Id);
-                Map(it => it.TimeStamp);
-                References(it => it.Product).Column("ProductId").Not.Nullable();
-                References(it => it.Provisioner).Column("ProvisionerId").Not.Nullable();
+
+                Map(it => it.TimeStamp).UniqueKey("UniqueSupplyKey");
+                References(it => it.Product).Column("ProductId").Not.Nullable().UniqueKey("UniqueSupplyKey");
+                References(it => it.Provisioner).Column("ProvisionerId").Not.Nullable().UniqueKey("UniqueSupplyKey");
             }
         }
     }

@@ -39,6 +39,7 @@ Ext.define('App.controller.supplies', {
         this.application.on('FORM_CONTROLLER_ADD', this.onFormControllerAdd, this);
         this.application.on('FORM_CONTROLLER_CLOSED', this.onFormControllerClosed, this);
     },
+
     onFormControllerAdd: function (values) {
      
         var date = values.date;
@@ -50,14 +51,27 @@ Ext.define('App.controller.supplies', {
             TimeStamp: date,
             Product: { Id: values.product},
             Provisioner: { Id: values.provisioner}
-        });
-
-        console.log('pr',pr);
-
+        });        
+        
         // Поле должно автоматически ставится в true, но этого не происходит.
         pr.phantom = true;
         store.add(pr);
-        store.sync();
+        store.sync({
+            failure: function (data) {
+                store.rejectChanges();
+                var responseCode = data.exceptions[0].error.status;
+                if (responseCode === 409) {
+                    alert(
+                        'Вы пытаетесь добавить дубликат поставки. Дата, Товар и Поставщик должны быть совместно уникальны.');
+                } else {
+                    alert(
+                        'Произошла непредвиденная ошибка');
+                }
+                console.log(data);
+            }
+        });
+
+
     },
     onFormControllerClosed: function () {
         this.application.un('FORM_CONTROLLER_ADD', this.onFormControllerAdd, this);

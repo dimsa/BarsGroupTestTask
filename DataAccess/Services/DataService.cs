@@ -24,7 +24,7 @@ namespace DataAccess.Services
             return list;
         }
 
-        public Supply AddSupply(Supply supply)
+        public Supply AddSupply(Supply supply, out Exception exception)
         {
             _unitOfWork.BeginTransaction();
             try
@@ -33,10 +33,12 @@ namespace DataAccess.Services
                 supply.Provisioner = _provisionerRepository.GetById(supply.Provisioner.Id);
                 supply.Product = _productRepository.GetById(supply.Product.Id);
                 _unitOfWork.Commit();
+                exception = null;
                 return supply;
             } catch (Exception ex)
             {
                 _unitOfWork.Rollback();
+                exception = ex;
                 return null;
             }
         }

@@ -1,4 +1,5 @@
-﻿using DataAccess.Entities;
+﻿using System;
+using DataAccess.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -24,9 +25,19 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public Supply Post(SupplyDto supply)
+        public IHttpActionResult Post(SupplyDto supply)
         {
-            return DataService.AddSupply(DtoConverter.SupplyDtoToModel(supply));
+            Exception ex;
+            var res = DataService.AddSupply(DtoConverter.SupplyDtoToModel(supply), out ex);
+
+            if (ex == null)
+            {
+                return Ok(res);
+            }
+            else
+            {
+                return Conflict();
+            }
         }
 
         [HttpDelete]
