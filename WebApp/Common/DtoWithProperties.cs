@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-
-namespace WebApp.Common
+﻿namespace WebApp.Common
 {
     public class DtoWithProperties<T>
     {
@@ -12,7 +8,7 @@ namespace WebApp.Common
         {
             Data = obj;
 
-            // Можно какие-то сведения об ошибках доставить, но нт необходимости
+            // Можно какие-то сведения об ошибках доставить, но нет необходимости
         }
     }
 }

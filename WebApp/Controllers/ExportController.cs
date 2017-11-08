@@ -46,7 +46,6 @@ namespace WebApp.Controllers
             return composeFormattedData(html, "doc", "application/ms-word");           
         }
 
-
         public ExportController(DataService dataService) : base(dataService)
         {
             

@@ -11,7 +11,7 @@ namespace DataAccess.Mappings
             {
                 Id(it => it.Id);
                 Map(it => it.Name);
-                Map(it => it.Code);              
+                Map(it => it.Code).UniqueKey("UniqueProductCode");              
             }
         }
 

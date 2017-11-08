@@ -6,6 +6,9 @@ using DataAccess.Repository;
 
 namespace DataAccess.Services
 {
+    /* 
+     * При необходимости данный сервис можно делить на более мелкие и инъектить конкретно их
+     */
     public class DataService
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -83,8 +86,9 @@ namespace DataAccess.Services
                 Name = "Новый продукт " + DateTime.Now
             };
 
-            // По умолчанию создание продукта транзакционно
+            _unitOfWork.BeginTransaction();
             _productRepository.Create(product);
+            _unitOfWork.Commit();
             return product;
         }
 
@@ -135,8 +139,9 @@ namespace DataAccess.Services
                 Name = "Новый поставщик " + DateTime.Now
             };
 
-            // По умолчанию создание продукта транзакционно
+            _unitOfWork.BeginTransaction();
             _provisionerRepository.Create(provisioner);
+            _unitOfWork.Commit();
             return provisioner;
         }
 
@@ -167,7 +172,6 @@ namespace DataAccess.Services
         {
             _unitOfWork.BeginTransaction();
             DeleteSuppliesRefencedToProvisioner(provisionerId);
-
             _provisionerRepository.Delete(provisionerId);
             _unitOfWork.Commit();
         }

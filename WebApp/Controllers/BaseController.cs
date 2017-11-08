@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Cors;
-using DataAccess;
 using DataAccess.Services;
 
 namespace WebApp.Controllers
