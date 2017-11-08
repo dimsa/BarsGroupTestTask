@@ -39,7 +39,6 @@ Ext.define('App.view.provisioners', {
                 icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
                 tooltip: 'Edit',
                 handler: function (grid, rowIndex, colIndex) {
-                    console.log(cellProvisionerEditing);
                     if (cellProvisionerEditing.editing === true) {
                         cellProvisionerEditing.editing = false;
                         cellProvisionerEditing.cancelEdit();

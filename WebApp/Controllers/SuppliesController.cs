@@ -1,6 +1,4 @@
 ﻿using System;
-using DataAccess.Entities;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using DataAccess.Services;
@@ -21,20 +19,24 @@ namespace WebApp.Controllers
         }
      
         [HttpPut]
-        public void Put(SupplyDto supply)
+        public IHttpActionResult Put(SupplyDto supply)
         {
-            DataService.UpdateSupply(DtoConverter.SupplyDtoToModel(supply));
+            var res = DataService.UpdateSupply(DtoConverter.SupplyDtoToModel(supply), out Exception ex);
+            return ComposeResult(ex, res);
         }
 
         [HttpPost]
         public IHttpActionResult Post(SupplyDto supply)
         {
-            Exception ex;
-            var res = new DtoWithProperties<SupplyDto>(DataService.AddSupply(DtoConverter.SupplyDtoToModel(supply), out ex));
+            var res = new DtoWithProperties<SupplyDto>(DataService.AddSupply(DtoConverter.SupplyDtoToModel(supply), out Exception ex));
+            return ComposeResult(ex, res);
+        }
 
+        private IHttpActionResult ComposeResult(Exception ex, object obj)
+        {
             if (ex == null)
             {
-                return Ok(res);
+                return Ok(obj);
             }
             else
             {

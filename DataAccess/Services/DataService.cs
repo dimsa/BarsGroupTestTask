@@ -35,8 +35,7 @@ namespace DataAccess.Services
                 _unitOfWork.Commit();
                 exception = null;
                 return supply;
-            } catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 _unitOfWork.Rollback();
                 exception = ex;
                 return null;
@@ -50,11 +49,22 @@ namespace DataAccess.Services
             _unitOfWork.Commit();
         }
 
-        public void UpdateSupply(Supply supply)
+        public Supply UpdateSupply(Supply supply, out Exception exception)
         {
             _unitOfWork.BeginTransaction();
-            _supplyRepository.Update(supply);
-            _unitOfWork.Commit();
+            try
+            {
+                _supplyRepository.Update(supply);
+                supply.Provisioner = _provisionerRepository.GetById(supply.Provisioner.Id);
+                supply.Product = _productRepository.GetById(supply.Product.Id);
+                _unitOfWork.Commit();
+                exception = null;
+                return supply;
+            } catch (Exception ex) {
+                _unitOfWork.Rollback();
+                exception = ex;
+                return null;
+            }
         }
         
         public DataService(IUnitOfWork unitOfWork)

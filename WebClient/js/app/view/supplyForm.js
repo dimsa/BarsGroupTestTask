@@ -9,8 +9,12 @@ Ext.define('App.view.supplyForm', {
     modal: true,
     closable: false,
     title: 'Редактирование/создание поставок',
-
     layout: 'fit',
+    updateStores: function () {
+        // Обновляем store, если что-то изменилось в данных
+        this.down('#product').store.load();
+        this.down('#provisioner').store.load();
+    },
     items: [
         {
             xtype: 'form',
@@ -26,7 +30,7 @@ Ext.define('App.view.supplyForm', {
             bodyStyle: {
                 padding: '5px'
             },
-            items: [
+                     items: [
 		        {
 		            xtype: 'datefield',
 		            fieldLabel: 'Дата поставки',

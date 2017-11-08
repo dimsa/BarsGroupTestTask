@@ -190,7 +190,6 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Common\DtoConverters.cs" />
     <Compile Include="Common\Exporter.cs" />
-    <Compile Include="Common\test.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\ProvisonersController.cs" />

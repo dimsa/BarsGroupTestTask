@@ -46,7 +46,6 @@ Ext.define('App.view.products', {
                     icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png', // Use a URL in the icon config
                     tooltip: 'Edit',
                     handler: function(grid, rowIndex, colIndex) {
-                        console.log(cellProductsEditing);
                         if (cellProductsEditing.editing === true) {
                             cellProductsEditing.editing = false;
                             cellProductsEditing.cancelEdit();

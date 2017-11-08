@@ -23,6 +23,29 @@ Ext.define('App.controller.supplies', {
     viewport: undefined,
     init: function (app) {
         console.log('suppliesControllerInit');
+
+        this.control({
+            '#supplyGrid actioncolumn': {
+                'SUPPLY_EDITED': function(e) {
+                    var controller = this.application.getController('App.controller.supplyForm');
+
+                    // TODO: проверить, не может ли прийти другой формат даты
+                    var date = Ext.Date.parse(e.raw.TimeStamp, 'Y-d-mTH:i:s');
+                     controller.show(
+                        {
+                            id: e.raw.Id,
+                            product: e.raw.Product.Id,
+                            provisioner: e.raw.Provisioner.Id,
+                            date: Ext.Date.format(date, 'd.m.Y')
+                        }
+                    );
+
+                    this.application.on('FORM_CONTROLLER_APPLY', this.onFormControllerAddOrUpdate, this);
+                    this.application.on('FORM_CONTROLLER_CLOSED', this.onFormControllerClosed, this);
+                }
+            }
+        });
+
     },
     renderTo: function (viewport) {
         var store = this.getStore('App.model.supplyStore');
@@ -41,47 +64,60 @@ Ext.define('App.controller.supplies', {
         var controller = this.application.getController('App.controller.supplyForm');
         controller.show();
 
-        this.application.on('FORM_CONTROLLER_ADD', this.onFormControllerAdd, this);
+        this.application.on('FORM_CONTROLLER_APPLY', this.onFormControllerAddOrUpdate, this);
         this.application.on('FORM_CONTROLLER_CLOSED', this.onFormControllerClosed, this);
     },
+
     refresh: function (button) {
         var store = this.getStore('App.model.supplyStore');
         store.load();
     },
 
-    onFormControllerAdd: function (values) {
-     
+    onFormControllerAddOrUpdate: function (values) {
         var date = values.date;
         var store = this.getStore('App.model.supplyStore');
-        var pr = Ext.create('App.model.supply', {
-            Id: 0,
-            TimeStamp: date,
-            Product: { Id: values.product},
-            Provisioner: { Id: values.provisioner}
-        });        
-        
-        // Поле должно автоматически ставится в true, но этого не происходит.
-        pr.phantom = true;
-        store.add(pr);
+
+        if (values.id === undefined) {
+            var pr = Ext.create('App.model.supply', {
+                Id: 0,
+                TimeStamp: date,
+                Product: { Id: values.product },
+                Provisioner: { Id: values.provisioner }
+            });
+
+            // Поле должно автоматически ставится в true, но этого не происходит.
+            pr.phantom = true;
+            store.add(pr);            
+        } else {
+            var updatable = store.findRecord('Id', values.id);
+            updatable.set('TimeStamp', values.date);
+            updatable.set('Product', { Id: values.product });
+            updatable.set('Provisioner', { Id: values.provisioner });
+            updatable.commit();
+            // Почему-то не устанавливается флаг dirty сам. И поэтому без него не происходит запроса
+            updatable.dirty = true;
+        }
+
         store.sync({
-            failure: function (data) {
+            failure: function(data) {
                 store.rejectChanges();
+                store.load();
                 var responseCode = data.exceptions[0].error.status;
                 if (responseCode === 409) {
                     alert(
-                        'Вы пытаетесь добавить дубликат поставки. Дата, Товар и Поставщик должны быть совместно уникальны.');
+                        'Вы пытаетесь добавить/обновить данные таким образом, что получаете дубликат. Дата, Товар и Поставщик должны быть совместно уникальны.');
                 } else {
                     alert(
                         'Произошла непредвиденная ошибка');
                 }
+            },
+            success: function (data) {
+                store.load();
             }
         });
-
-
     },
     onFormControllerClosed: function () {
-        this.application.un('FORM_CONTROLLER_ADD', this.onFormControllerAdd, this);
-        this.application.un('FORM_CONTROLLER_EDIT', this.onFormControllerEdit, this);
+        this.application.un('FORM_CONTROLLER_APPLY', this.onFormControllerAddOrUpdate, this);        
         this.application.un('FORM_CONTROLLER_CLOSED', this.onFormControllerClosed, this);
     },
 });

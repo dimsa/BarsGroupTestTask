@@ -1,7 +1,7 @@
 Ext.define('App.view.supplies', {
     extend: 'Ext.grid.Panel',
     title: 'Редактирование списка поставок',
-
+    itemId: 'supplyGrid',
     columns: [
         {
             text: 'Идентификатор',
@@ -40,25 +40,31 @@ Ext.define('App.view.supplies', {
         {
             xtype: 'actioncolumn',
             width: 50,
-            items: [{
-                icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png',
-                tooltip: 'Edit',
-                handler: function (grid, rowIndex, colIndex) {
-                    console.log(grid);
-                    var rec = grid.getStore().getAt(rowIndex);
-                    rec.set('Name', 'new value');
-                    rec.commit();
+            items: [
+                {
+                    icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png',
+                    tooltip: 'Edit',
+                    handler: function(grid, rowIndex, colIndex) {
+                        var rec = grid.getStore().getAt(rowIndex);
+                        this.fireEvent('SUPPLY_EDITED', rec);
+                    }
+                }, {
+                    icon: 'js/vendor/extjs/examples/restful/images/delete.png',
+                    tooltip: 'Delete',
+                    handler: function(grid, rowIndex, colIndex) {
+                        var rec = grid.getStore().getAt(rowIndex);
+                        grid.getStore().remove(rec);
+                        grid.getStore().sync();
+                    }
                 }
-            }, {
-                icon: 'js/vendor/extjs/examples/restful/images/delete.png',
-                tooltip: 'Delete',
-                handler: function (grid, rowIndex, colIndex) {
-                    var rec = grid.getStore().getAt(rowIndex);
-                    grid.getStore().remove(rec);
-                }
-            }]
+            ]
         }
     ],
+    
+    initComponent: function() {
+        this.callParent(arguments);
+    },
+       
     dockedItems: [{
         xtype: 'toolbar',
         dock: 'top',
@@ -68,8 +74,7 @@ Ext.define('App.view.supplies', {
                 name: 'add',
                 text: 'Добавить поставку',
                 itemId: 'addSupplyButton'
-            },
-            
+            },         
             {
                 xtype: 'button',
                 name: 'refresh',

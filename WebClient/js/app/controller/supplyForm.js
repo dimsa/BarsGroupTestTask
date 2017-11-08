@@ -3,16 +3,19 @@ Ext.define('App.controller.supplyForm', {
 
     views: ['App.view.supplyForm'],
     models: ['App.model.supply'],
-
     view: undefined,
     values: undefined,
-
+    editingId: undefined,
     show: function (values) {
-
         var Form = this.getView('App.view.supplyForm');
         this.view = Ext.create(Form);
-        this.view.show();
 
+        if (values !== undefined && values.id !== undefined) {
+            this.editingId = values.id;
+        }
+
+        this.view.updateStores();
+        this.view.show();
         this.values = values;
 
         if (this.values) {
@@ -55,25 +58,23 @@ Ext.define('App.controller.supplyForm', {
 
     save: function () {
         var formPanel = this.getFormPanel();
-        console.log(formPanel);
         if (!formPanel.getForm().isValid()) {
             Ext.MessageBox.alert('Ошибка', 'Заполните все поля, пожалуйста');
             return;
         }
 
         var values = formPanel.getValues();
-        if (this.values) {
-            this.application.fireEvent('FORM_CONTROLLER_EDIT', values);
-        }
-        else {
-            this.application.fireEvent('FORM_CONTROLLER_ADD', values);
+
+        if (this.editingId !== undefined) {
+            values.id = this.editingId;
         }
 
-
+        this.application.fireEvent('FORM_CONTROLLER_APPLY', values);
         this.cancel();
     },
 
     onViewClose: function () {
+        this.editingId = undefined;
         this.application.fireEvent('FORM_CONTROLLER_VIEW_CLOSED');
     }
 });
