@@ -13,14 +13,14 @@ namespace DataAccess.Services
         private readonly IRepository<Provisioner> _provisionerRepository;
         private readonly IRepository<Supply> _supplyRepository;
 
-        public List<Supply> GetSupplies(int skip, int quantity)
+        public List<Supply> GetSupplies(int skip, int quantity, out int totalCount)
         {
             var query = _supplyRepository.GetAll();
             var count = query.Count();
 
             var list = count > 0 ?
                 query.Skip(skip).Take(Math.Min(quantity, count)).ToList() : new List<Supply>();
-                       
+            totalCount = count;                       
             return list;
         }
 
@@ -130,14 +130,14 @@ namespace DataAccess.Services
             return provisioner;
         }
 
-        public List<Provisioner> GetProvisioner(int skip, int quantity)
+        public List<Provisioner> GetProvisioner(int skip, int quantity, out int totalCount)
         {
             var query = _provisionerRepository.GetAll();
             var count = query.Count();
 
             var list = count > 0 ? 
                 query.Skip(skip).Take(Math.Min(quantity, count)).ToList() : new List<Provisioner>();
-
+            totalCount = count;
             return list;
         }
 

@@ -68,5 +68,13 @@ Ext.define('App.view.provisioners', {
                 itemId: 'addProvisionerButton'
             }
         ]
-    }]
+    }, {
+            xtype: 'pagingtoolbar',
+            store: Ext.data.StoreManager.get("App.model.provisionerStore"),
+            dock: 'bottom',
+            displayInfo: true,
+            beforePageText: 'Страница',
+            afterPageText: 'из {0}',
+            displayMsg: '{0} - {1} из {2}'
+        }]
 });

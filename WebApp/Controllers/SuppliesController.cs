@@ -12,10 +12,12 @@ namespace WebApp.Controllers
     public class SuppliesController : BaseController
     {
         [HttpGet]
-        public List<SupplyDto> Get(int start = 0, int limit = 25)
+        public ListWithTotal<SupplyDto> Get(int start = 0, int limit = 25)
         {
-            var res = DataService.GetSupplies(start, limit);            
-            return res.Select(DtoConverter.SupplyModelToDto).ToList();
+            var res = DataService.GetSupplies(start, limit, out var totalCount);            
+            var list = res.Select(DtoConverter.SupplyModelToDto).ToList();
+
+            return new ListWithTotal<SupplyDto>(list, totalCount);
         }
      
         [HttpPut]
@@ -28,7 +30,7 @@ namespace WebApp.Controllers
         public IHttpActionResult Post(SupplyDto supply)
         {
             Exception ex;
-            var res = DataService.AddSupply(DtoConverter.SupplyDtoToModel(supply), out ex);
+            var res = new DtoWithProperties<SupplyDto>(DataService.AddSupply(DtoConverter.SupplyDtoToModel(supply), out ex));
 
             if (ex == null)
             {

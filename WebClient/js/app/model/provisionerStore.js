@@ -1,14 +1,16 @@
 Ext.define('App.model.provisionerStore', {
     extend: 'Ext.data.Store',
     model: 'App.model.provisioner',
+    pageSize: 10,
     proxy: {
         allowSingle: true,
         type: 'rest',
-        url: 'http://localhost:5344/api/provisioners',
-       // success: function (r) { alert(r); },
+        url: 'http://localhost:5344/api/provisioners',              
         reader: {
             successProperty: 'success',
-            type: 'json'
+            type: 'json',
+            root: 'Data',
+            totalProperty: 'RecordTotal'
         },
         writer: {
             type: 'json'

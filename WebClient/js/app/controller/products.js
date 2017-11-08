@@ -35,5 +35,5 @@ Ext.define('App.controller.products', {
         // Поле должно автоматически ставится в true, но этого не происходит.
         pr.phantom = true;
         store.add(pr);
-    },
+    }
 });

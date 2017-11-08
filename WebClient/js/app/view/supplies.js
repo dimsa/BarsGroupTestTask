@@ -83,5 +83,13 @@ Ext.define('App.view.supplies', {
                 itemId: 'printSupplyButton'
             }
         ]
+    }, {
+        xtype: 'pagingtoolbar',
+        store: Ext.data.StoreManager.get("App.model.supplyStore"),
+        dock: 'bottom',
+        displayInfo: true,
+        beforePageText: 'Страница',
+        afterPageText: 'из {0}',
+        displayMsg: '{0} - {1} из {2}'
     }]
 });

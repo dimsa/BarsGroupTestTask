@@ -27,9 +27,9 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ProductDto Post(ProductDto product)
+        public DtoWithProperties<ProductDto> Post(ProductDto product)
         {
-            return DtoConverter.ProductModelToDto(DataService.AddProduct());
+            return new DtoWithProperties<ProductDto>(DtoConverter.ProductModelToDto(DataService.AddProduct()));
         }
 
         [HttpDelete]

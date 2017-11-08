@@ -29,8 +29,7 @@ Ext.define('App.controller.provisioners', {
     addComponent: function (component) {
         this.viewport.add(component);
     },
-    add: function (button) {
-        alert('hello');
+    add: function (button) {        
         var store = this.getStore('App.model.provisionerStore');
         var pr = Ext.create('App.model.provisioner', { Id: 0, Name: "Новый поставщик" });
         // Поле должно автоматически ставится в true, но этого не происходит.

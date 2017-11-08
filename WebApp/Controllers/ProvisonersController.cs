@@ -11,10 +11,12 @@ namespace WebApp.Controllers
     public class ProvisionersController : BaseController
     {
         [HttpGet]
-        public List<ProvisionerDto> Get(int start = 0, int limit = 25)
+        public ListWithTotal<ProvisionerDto> Get(int start = 0, int limit = 25)
         {
-            var res = DataService.GetProvisioner(start, limit);
-            return res.Select(DtoConverter.ProvisionerModelToDto).ToList();
+            var res = DataService.GetProvisioner(start, limit, out var totalCount);
+            var list = res.Select(DtoConverter.ProvisionerModelToDto).ToList();             
+
+            return new ListWithTotal<ProvisionerDto>(list, totalCount);
         }    
 
         [HttpPut]
@@ -24,9 +26,9 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ProvisionerDto Post(ProvisionerDto provisioner)
+        public DtoWithProperties<ProvisionerDto> Post(ProvisionerDto provisioner)
         {
-            return DtoConverter.ProvisionerModelToDto(DataService.AddProvisioner());
+            return new DtoWithProperties<ProvisionerDto>(DtoConverter.ProvisionerModelToDto(DataService.AddProvisioner()));
         }
 
         [HttpDelete]

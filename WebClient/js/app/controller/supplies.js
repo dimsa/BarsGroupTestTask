@@ -53,8 +53,6 @@ Ext.define('App.controller.supplies', {
      
         var date = values.date;
         var store = this.getStore('App.model.supplyStore');
-
-        console.log('store',store);
         var pr = Ext.create('App.model.supply', {
             Id: 0,
             TimeStamp: date,
@@ -76,7 +74,6 @@ Ext.define('App.controller.supplies', {
                     alert(
                         'Произошла непредвиденная ошибка');
                 }
-                console.log(data);
             }
         });
 
