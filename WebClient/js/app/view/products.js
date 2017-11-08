@@ -43,7 +43,7 @@ Ext.define('App.view.products', {
             width: 50,
             items: [
                 {
-                    icon: 'js/vendor/extjs/examples/shared/icons/fam/cog_edit.png', // Use a URL in the icon config
+                    icon: 'img/cog_edit.png', // Use a URL in the icon config
                     tooltip: 'Edit',
                     handler: function(grid, rowIndex, colIndex) {
                         if (cellProductsEditing.editing === true) {
@@ -54,7 +54,7 @@ Ext.define('App.view.products', {
                         }
                     }
                 }, {
-                    icon: 'js/vendor/extjs/examples/restful/images/delete.png',
+                    icon: 'img/delete.png',
                     tooltip: 'Delete',
                     handler: function(grid, rowIndex, colIndex) {
                         var rec = grid.getStore().getAt(rowIndex);
