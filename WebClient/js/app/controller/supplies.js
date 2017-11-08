@@ -77,10 +77,11 @@ Ext.define('App.controller.supplies', {
         var date = values.date;
         var store = this.getStore('App.model.supplyStore');
 
+        console.log(values);
         if (values.id === undefined) {
             var pr = Ext.create('App.model.supply', {
                 Id: 0,
-                TimeStamp: date,
+                TimeStamp: Ext.Date.parse(values.date, 'd.m.Y'),
                 Product: { Id: values.product },
                 Provisioner: { Id: values.provisioner }
             });
