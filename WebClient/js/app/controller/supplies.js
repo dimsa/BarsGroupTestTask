@@ -91,7 +91,7 @@ Ext.define('App.controller.supplies', {
             store.add(pr);            
         } else {
             var updatable = store.findRecord('Id', values.id);
-            updatable.set('TimeStamp', values.date);
+            updatable.set('TimeStamp', Ext.Date.parse(values.date, 'd.m.Y'));
             updatable.set('Product', { Id: values.product });
             updatable.set('Provisioner', { Id: values.provisioner });
             updatable.commit();
